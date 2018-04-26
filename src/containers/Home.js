@@ -10,3 +10,5 @@ const Home = (props) => (
 			<Link to = '/module'><button>Go</button></Link>
 		</div>
 	);
+
+export default Home;

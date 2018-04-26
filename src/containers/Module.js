@@ -1,8 +1,9 @@
 import React,{ Component } from 'react';
-import singleInput from '../components/SingleInput';
-import Select from '../components/Select'
+import SingleInput from '../components/SingleInput';
+import Select from '../components/Select';
+import axios from 'axios';
 
-export deafult class Module extends Component{
+export default class Module extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -108,7 +109,7 @@ export deafult class Module extends Component{
 						<input type = "submit" value = "submit"/>
 					</form>
 					<h3>Module getOne</h3>
-					<form onSubmit = { this.handleGetOneSubmit }
+					<form onSubmit = { this.handleGetOneSubmit }>
 						<Select 
 							name = { 'moduleId' }
 							placeholder = { 'Choose moduleId' }

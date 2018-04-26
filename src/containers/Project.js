@@ -23,13 +23,13 @@ export default class Project extends Component {
 				return <li key = { project.PROJECTID }>{ project.PROJECTID }</li>
 			})
 		}
-		render(){
+		return(
 			<div>
 				<h3>Project list</h3>
 				<ul>
 					{projectNodes}
 				</ul>
 			</div>
-		}
+		)
 	}
 }
