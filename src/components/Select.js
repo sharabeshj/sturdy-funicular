@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Select = (props) => {
+const Select = (props) => (
 	<div>
 		<select>
 		name = { props.name },
@@ -16,7 +16,7 @@ const Select = (props) => {
 		})}
 		</select>
 	</div>
-}
+)
 
 Select.propTypes = {
 	name : PropTypes.string.isRequired,

@@ -29,11 +29,12 @@ export default class Module extends Component{
 	projectList(){
 		axios.get('http://13.71.117.40:3200/Project/getAllWithOutPagination')
 			.then(res => {
-				for(var key in res.data){
-					if(res.data.hasOwnProperty(key)){
-						this.state.data.push(res.data[key]);
-					}
+				var data = [];
+				for(var key in res.data.result){
+					data.push(res.data.result[key]._id);
 				}
+				console.log(this.state.projectOptions);
+				this.setState({ projectOptions : data });
 			})
 			.catch(e => console.log(e));
 	}
@@ -43,8 +44,11 @@ export default class Module extends Component{
 	handleProjectIdSelection(e){
 		this.setState({ projectId : e.target.value });
 		axios.get('http://13.71.117.40:3200/Module/getAll/'+this.state.projectId)
-			.then(res => this.setState({ moduleOptions : res.data.modules }))
-			.catch(e => console.log(e));
+			.then(res => {
+				console.log(res.data);
+				this.setState({ moduleOptions : res.data.modules });
+			})
+			.catch(e => console.log('hi'));
 	}
 	handleModuleIdSelection(e){
 		this.setState({ moduleId : e.target.value });
