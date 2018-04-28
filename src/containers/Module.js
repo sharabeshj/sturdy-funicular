@@ -2,8 +2,30 @@ import React,{ Component } from 'react';
 import SingleInput from '../components/SingleInput';
 import Select from '../components/Select';
 import axios from 'axios';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
+import PropTypes from 'prop-types';
+import Grid from 'material-ui/Grid';
+import Button from 'material-ui/Button';
 
-export default class Module extends Component{
+const styles = theme => ({
+	root :  theme.mixins.gutters({
+		paddingTop : 16,
+		paddingBottom : 16,
+		marginTop : theme.spacing.unit*3,
+		textAlign : "center",
+	}),
+	container : {
+		display : 'flex',
+		flexWrap : 'wrap',
+	},
+	input : {
+		display : 'none',
+	}
+});
+
+class Module extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
@@ -23,6 +45,9 @@ export default class Module extends Component{
 		this.handleModuleIdSelection = this.handleModuleIdSelection.bind(this);
 		this.handleProjectIdSelection = this.handleProjectIdSelection.bind(this);
 	}
+	static propTypes = {
+			classes : PropTypes.object.isRequired,
+		};
 	componentDidMount(){
 		this.projectList();
 	}
@@ -93,80 +118,128 @@ export default class Module extends Component{
 			.catch(e => console.log(e));
 	}
 	render(){
+		const { classes } = this.props;
 		return (
-				<div>
-					<h3>Module Create</h3>
-					<form onSubmit = { this.handleCreateSubmit }>
-						<SingleInput
-							name = { 'Name' }
-							inputType = { 'text' }
-							title = { 'Module Name' }
-							content = { this.state.nameCreate }
-							controlFunc = { this.handleNameChange }
-							placeholder = { 'Enter the module name' }/>
-						<Select
-							name = { 'moduleId' }
-							placeholder = {'Choose moduleId'}
-							controlFunc = { this.handleModuleIdSelection }
-							options = { this.state.moduleOptions }
-							selectedOptions = { this.state.moduleId }/>
-						<input type = "submit" value = "submit"/>
-					</form>
-					<h3>Module getOne</h3>
-					<form onSubmit = { this.handleGetOneSubmit }>
-						<Select 
-							name = { 'moduleId' }
-							placeholder = { 'Choose moduleId' }
-							controlFunc = { this.handleModuleIdSelection }
-							options = { this.state.moduleOptions }
-							selectedOptions = { this.state.moduleId }/>
-						<input type = "submit" value = "submit"/>
-					</form>
-					<h3>Module Update</h3>
-					<form onSubmit = { this.handleUpdateSubmit }>
-						<Select
-							name = { 'moduleId' }
-							placeholder = { 'Choose moduleId' }
-							controlFunc = { this.handleModuleIdSelection }
-							options = { this.state.moduleOptions }
-							selectedOptions = { this.state.moduleId }/>
-						<SingleInput
-							name = { 'Name' }
-							inputType = { 'text' }
-							title = { 'Module Name' }
-							controlFunc = { this.handleNameChange }
-							content = { this.state.nameUpdate }
-							placeholder = { 'Enter module name' }
-							/>
-						<Select
-							name = { 'projectId' }
-							placeholder = { 'Choose projectId' }
-							controlFunc = { this.handleProjectIdSelection }
-							options = { this.state.projectOptions }
-							selectedOptions = { this.state.projectId }/>
-						<input type = "submit" value = "submit"/>
-					</form>
-					<h3>Module getAll</h3>
-					<form onSubmit = { this.handleGetAllSubmit }>
-						<Select
-							name= { 'projectId' }
-							placeholder = { 'Choose projectId' }
-							controlFunc = { this.handleProjectIdSelection }
-							options = { this.state.projectOptions }
-							selectedOptions = { this.state.projectId }/>
-						<input type = "submit" value = "submit"/>
-					</form>
-					<h3>Module delete</h3>
-					<form onSubmit = { this.handleDeleteSubmit }>
-						<Select
-							name = { 'moduleId' }
-							placeholder = { 'Choose moduleId' }
-							controlFunc = { this.handleModuleIdSelection }
-							options = { this.state.moduleOptions }
-							selectedOptions = { this.state.moduleId }/>
-						<input type = "submit" value = "submit"/>
-					</form>	
-				</div>
-			)
+				<Grid container justify = "center" spacing = {24}>
+					<Grid item xs = {6}>
+						<Paper className = { classes.root } elevation = {4}>
+							<Typography variant = "headline" gutterBottom>Module Create</Typography>
+							<form onSubmit = { this.handleCreateSubmit } className = { classes.container } noValidate autoComplete = "off">
+								<SingleInput
+									name = { 'Name' }
+									inputType = { 'text' }
+									title = { 'Module Name' }
+									content = { this.state.nameCreate }
+									controlFunc = { this.handleNameChange }
+									placeholder = { 'Enter the module name' }/>
+								<Select
+									name = { 'moduleId' }
+									placeholder = {'Choose moduleId'}
+									controlFunc = { this.handleModuleIdSelection }
+									options = { this.state.moduleOptions }
+									selectedOptions = { this.state.moduleId }/>
+								<input className = { classes.input } type = "submit" id = "submit"/>
+								<label htmlFor = "submit">
+									<Button variant = "raised" component = "span" color="primary" className = { classes.button }>
+										Create
+									</Button>
+								</label>
+							</form>
+						</Paper>
+					</Grid>
+					<Grid item xs = {6}>
+						<Paper className = { classes.root } elevation = {4}>
+							<Typography variant = "headline" gutterBottom>Module getOne</Typography>
+							<form onSubmit = { this.handleGetOneSubmit } className = { classes.container } noValidate autoComplete = "off">
+								<Select 
+									name = { 'moduleId' }
+									placeholder = { 'Choose moduleId' }
+									controlFunc = { this.handleModuleIdSelection }
+									options = { this.state.moduleOptions }
+									selectedOptions = { this.state.moduleId }/>
+								<input className = { classes.input } type = "submit" id = "submit"/>
+								<label htmlFor = "submit">
+									<Button variant = "raised" component = "span" color="primary" className = { classes.button }>
+										Get
+									</Button>
+								</label>
+							</form>
+						</Paper>
+					</Grid>
+					<Grid item xs = {6}>
+						<Paper className = { classes.root } elevation = {4}>
+							<Typography variant = "headline" gutterBottom>Module Update</Typography>
+							<form onSubmit = { this.handleUpdateSubmit } className = { classes.container } noValidate autoComplete = "off">
+								<Select
+									name = { 'moduleId' }
+									placeholder = { 'Choose moduleId' }
+									controlFunc = { this.handleModuleIdSelection }
+									options = { this.state.moduleOptions }
+									selectedOptions = { this.state.moduleId }/>
+								<SingleInput
+									name = { 'Name' }
+									inputType = { 'text' }
+									title = { 'Module Name' }
+									controlFunc = { this.handleNameChange }
+									content = { this.state.nameUpdate }
+									placeholder = { 'Enter module name' }
+									/>
+								<Select
+									name = { 'projectId' }
+									placeholder = { 'Choose projectId' }
+									controlFunc = { this.handleProjectIdSelection }
+									options = { this.state.projectOptions }
+									selectedOptions = { this.state.projectId }/>
+								<input className = { classes.input } type = "submit" id = "submit"/>
+								<label htmlFor = "submit">
+									<Button variant = "raised" component = "span" color="primary" className = { classes.button }>
+										Update
+									</Button>
+								</label>
+							</form>
+						</Paper>
+					</Grid>
+					<Grid>
+						<Paper className = { classes.root } elevation = {4}>
+							<Typography variant = "headline" gutterBottom>Module getAll</Typography>
+							<form onSubmit = { this.handleGetAllSubmit } className = { classes.container } noValidate autoComplete = "off">
+								<Select
+									name= { 'projectId' }
+									placeholder = { 'Choose projectId' }
+									controlFunc = { this.handleProjectIdSelection }
+									options = { this.state.projectOptions }
+									selectedOptions = { this.state.projectId }/>
+								<input className = { classes.input } type = "submit" id = "submit"/>
+								<label htmlFor = "submit">
+									<Button variant = "raised" component = "span" color="primary" className = { classes.button }>
+										Get
+									</Button>
+								</label>
+							</form>
+						</Paper>
+					</Grid>
+					<Grid item xs ={6}>
+						<Paper className = { classes.root } elevation = {4}>
+							<Typography variant = "headline" gutterBottom>Module delete</Typography>
+							<form onSubmit = { this.handleDeleteSubmit } className = { classes.container } noValidate autoComplete = "off">
+								<Select
+									name = { 'moduleId' }
+									placeholder = { 'Choose moduleId' }
+									controlFunc = { this.handleModuleIdSelection }
+									options = { this.state.moduleOptions }
+									selectedOptions = { this.state.moduleId }/>
+								<input className = { classes.input } type = "submit" id = "submit"/>
+								<label htmlFor = "submit">
+									<Button variant = "raised" component = "span" color="secondary" className = { classes.button }>
+										Delete
+									</Button>
+								</label>
+							</form>
+						</Paper>
+					</Grid>
+				</Grid>
+			);
 	}
 }
+
+export default withStyles(styles)(Module);
